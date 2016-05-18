@@ -3,6 +3,7 @@ package base.configure;
 import java.util.Properties;
 
 import javax.sql.DataSource;
+import javax.validation.Validator;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -17,6 +18,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import base.dao.IMobiDAO;
@@ -86,5 +88,11 @@ public class RootConfigure {
 		taskExecutor.setQueueCapacity(THREAD_POOL_QUEUE_NUM);
 		return taskExecutor;
 	}
+	
+	@Bean(name="CustomValidator")
+	public org.springframework.validation.Validator getValidator() {
+		return new LocalValidatorFactoryBean();
+	}
+
 
 }

@@ -27,7 +27,7 @@ public class EmailService {
 		MimeMessage mimeMessage = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
 		helper.setFrom("jasonxtu@163.com");
-		helper.setTo("lywhlao@163.com");
+		helper.setTo("billxtu@163.com");
 		helper.setText("这是我第一次尝试发送带有附件的邮件！！！" + mobiBean.toString());
 		helper.setSubject("你好Json");
 		FileSystemResource fileSystemResource = new FileSystemResource(

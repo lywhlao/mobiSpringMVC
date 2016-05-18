@@ -1,10 +1,21 @@
 package base.bean;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class UserBean {
 
-	String userName;
-	String password;
-	String eMail;
+	@NotNull
+	@Size(min = 6, max = 50)
+	private String userName;
+	
+	@NotNull
+	@Size(min = 6, max = 50)
+	private String password;
+	
+	@NotNull
+	@Size(min = 6, max = 100)
+	private String eMail;
 
 	public String getUserName() {
 		return userName;
