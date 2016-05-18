@@ -17,9 +17,9 @@ import base.util.Pagination;
 @RequestMapping({ "/", "/home" })
 public class HomeController {
 
-	private static final int DISPLAY_PAGE_NUM=1;
+	private static final int DISPLAY_PAGE_NUM = 1;
 	@Autowired
-	IMobiDAO mMobiDAO;//用@component
+	IMobiDAO mMobiDAO;// 用@component
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String home(Model model) {
@@ -27,17 +27,21 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
-	public String search(SearchBean searchBean,Model model) {
-		Pagination pagination=mMobiDAO.searchMobi(searchBean.getContent(),DISPLAY_PAGE_NUM);
+	public String search(SearchBean searchBean, Model model) {
+		Pagination pagination = mMobiDAO.searchMobi(searchBean.getContent(),
+				DISPLAY_PAGE_NUM);
 		model.addAttribute("pagination", pagination);
 		return "searchResult";
 	}
-	
-	@RequestMapping(value="/searchListPage/{content}/{page}",method=RequestMethod.GET)
-	public String searchListPage(@PathVariable String content,@PathVariable int page,Model model) throws UnsupportedEncodingException{
+
+	@RequestMapping(value = "/searchListPage/{content}/{page}", method = RequestMethod.GET)
+	public String searchListPage(@PathVariable String content,
+			@PathVariable int page, Model model)
+			throws UnsupportedEncodingException {
 		content = new String(content.getBytes("ISO-8859-1"), "utf8");
-		Pagination pagination=mMobiDAO.searchMobi(content,page);
+		Pagination pagination = mMobiDAO.searchMobi(content, page);
 		model.addAttribute("pagination", pagination);
 		return "searchResult";
 	}
+
 }

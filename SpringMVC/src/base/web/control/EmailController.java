@@ -12,7 +12,7 @@ import base.bean.MobiBean;
 import base.service.EmailService;
 
 @Controller
-public class EmailContorl {
+public class EmailController {
 
 	@Autowired
 	EmailService emailService;

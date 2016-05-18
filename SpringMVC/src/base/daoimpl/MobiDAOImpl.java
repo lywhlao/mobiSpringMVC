@@ -1,7 +1,5 @@
 package base.daoimpl;
 
-import javax.sql.DataSource;
-
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import base.dao.IMobiDAO;
@@ -12,8 +10,8 @@ public class MobiDAOImpl implements IMobiDAO {
 	private JdbcTemplate mJdbcTemplate;
 	private String SQL_SEARCH_STRING = "select * from mobi where content like ";
 
-	public MobiDAOImpl(DataSource dataSource) {
-		this.mJdbcTemplate = new JdbcTemplate(dataSource);
+	public MobiDAOImpl(JdbcTemplate jdbcTemplate) {
+		this.mJdbcTemplate = jdbcTemplate;
 	}
 
 	@Override

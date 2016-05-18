@@ -10,6 +10,7 @@ import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.core.task.TaskExecutor;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -19,16 +20,18 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import base.dao.IMobiDAO;
+import base.dao.IUserDAO;
 import base.daoimpl.MobiDAOImpl;
+import base.daoimpl.UserDAOImpl;
 
 //配置非web方面的bean
 @Configuration
 @ComponentScan(basePackages = { "base" }, excludeFilters = { @Filter(type = FilterType.ANNOTATION, value = EnableWebMvc.class) })
 @EnableAsync
 public class RootConfigure {
-	
-	public static final int THREAD_POOL_QUEUE_NUM=25;
-	
+
+	public static final int THREAD_POOL_QUEUE_NUM = 25;
+
 	// JDBC数据源
 	@Bean
 	public DataSource getDataSource() {
@@ -42,15 +45,19 @@ public class RootConfigure {
 
 	// 设置Jdbc模板，这里的dataSouce会自动注入（上方那个dataSource）
 	@Bean
-	public org.springframework.jdbc.core.JdbcTemplate JdbcTemplate(
-			DataSource dataSource) {
-		return new org.springframework.jdbc.core.JdbcTemplate(dataSource);
+	public JdbcTemplate getJdbcTemplate(DataSource dataSource) {
+		return new JdbcTemplate(dataSource);
 	}
 
 	// 设置具体的Reposity
 	@Bean
-	public IMobiDAO getMobiDAO() {
-		return new MobiDAOImpl(getDataSource());
+	public IMobiDAO getMobiDAO(JdbcTemplate jdbcTemplate) {
+		return new MobiDAOImpl(jdbcTemplate);
+	}
+
+	@Bean
+	public IUserDAO getUserDAO(JdbcTemplate jdbcTemplate) {
+		return new UserDAOImpl(jdbcTemplate);
 	}
 
 	// 邮件发送
@@ -70,12 +77,12 @@ public class RootConfigure {
 		return mailSenderImpl;
 	}
 
-	@Bean(name="CustomThreadPool")
+	@Bean(name = "CustomThreadPool")
 	public TaskExecutor taskExecutor() {
 		ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
-		int cpuNum=Runtime.getRuntime().availableProcessors();
+		int cpuNum = Runtime.getRuntime().availableProcessors();
 		taskExecutor.setCorePoolSize(cpuNum);
-		taskExecutor.setMaxPoolSize(2*cpuNum);
+		taskExecutor.setMaxPoolSize(2 * cpuNum);
 		taskExecutor.setQueueCapacity(THREAD_POOL_QUEUE_NUM);
 		return taskExecutor;
 	}

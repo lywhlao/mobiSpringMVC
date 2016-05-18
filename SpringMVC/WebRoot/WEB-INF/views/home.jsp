@@ -54,5 +54,7 @@ $(document).ready(function(){
 		<input type="radio" name="type" value="torrent" /> torrent<br /> <input
 			type="submit" value="开始搜索" /><br />
 	</form>
+	
+	<a href="/SpringMVC/register" >注册新用户</a>
 </body>
 </html>
