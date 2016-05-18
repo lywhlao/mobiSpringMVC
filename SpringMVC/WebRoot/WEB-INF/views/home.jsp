@@ -22,13 +22,20 @@
 <!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-<script src="/jQuery/jquery-1.12.3.min.js"></script>
+<script type="text/javascript" src="jquery/jquery-1.12.3.min.js"></script>
 <script>
 $(document).ready(function(){
   $("#btn1").click(function(){
-    $('#test').load('/example/jquery/demo_test.txt');
-  })
-})
+     $.post("/SpringMVC/sendEmail",{
+     content:"www.hello",
+     url:"www.world",
+     author:"laojiaqi",
+     description:"descrion"
+     },function(data,status){ 
+     alert("Data: " + data + "\nStatus: " + status);}
+     );
+  });
+});
 </script>
 </head>
 

@@ -14,6 +14,13 @@ public class Pagination {
 	private List<?> resultList; // 结果集存放List
     private String content;//搜索的内容
     
+	/**
+	 * @param sql 执行的sql语句
+	 * @param currentPage 当前页码
+	 * @param numPerPage 每一页的行数
+	 * @param jTemplate  jdbcTemplate
+	 * @param content 搜索的关键字
+	 */
 	public Pagination(String sql, int currentPage, int numPerPage,
 			JdbcTemplate jTemplate,String content) {
 		this.content=content;

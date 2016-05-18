@@ -22,22 +22,18 @@
 <!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-<script type="text/javascript">
-	function sendToEmail() {
-		var xmlhttp;
-		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
-			xmlhttp = new XMLHttpRequest();
-		} else {// code for IE6, IE5
-			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-		}
-		xmlhttp.onreadystatechange = function() {
-			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-				document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
-			}
-		}
-		xmlhttp.open("GET", "/SpringMVC/sendEmail", true);
-		xmlhttp.send();
-	}
+<script type="text/javascript" src="jquery/jquery-1.12.3.min.js"></script>
+<script>
+	$(document).ready(function() {
+		$("[data-content]").click(function() {
+		    var value=$(this).data("content");
+			$.post("/SpringMVC/sendEmail", {
+				content: value
+			}, function(data, status) {
+				alert("Data: " + data + "\nStatus: " + status);
+			});
+		});
+	});
 </script>
 </head>
 
@@ -47,8 +43,8 @@
 			<c:out value="《${temp['content']}》" />
 			<c:out value="作者: ${temp['author']}" />
 			<a href="<c:url value="${temp['url']}"/>"><c:out
-					value="${temp['url']}" /></a> 
-			<button type="button" onclick="sendToEmail()">发送到邮箱</button>
+					value="${temp['url']}" /></a>
+			<button data-content="${temp['content']}" type="button">发送到邮箱！！</button>
 			<br>
 			<c:out value="内容简介: ${temp['description']}" />
 		</div>

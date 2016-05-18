@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import base.bean.SearchBean;
-import base.dao.MobiDAO;
+import base.dao.IMobiDAO;
 import base.util.Pagination;
 
 @Controller
@@ -19,7 +19,7 @@ public class HomeController {
 
 	private static final int DISPLAY_PAGE_NUM=1;
 	@Autowired
-	MobiDAO mMobiDAO;//用@component
+	IMobiDAO mMobiDAO;//用@component
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String home(Model model) {

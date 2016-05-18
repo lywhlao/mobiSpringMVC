@@ -32,5 +32,11 @@ public class MobiBean {
 		this.url = url;
 	}
 	
+	@Override
+	public String toString() {
+		return "MobiBean [content=" + content + ", url=" + url + ", author="
+				+ author + ", description=" + description + "]";
+	}
+	
 	
 }

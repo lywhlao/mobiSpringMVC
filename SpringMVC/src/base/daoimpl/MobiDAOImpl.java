@@ -4,10 +4,10 @@ import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import base.dao.MobiDAO;
+import base.dao.IMobiDAO;
 import base.util.Pagination;
 
-public class MobiDAOImpl implements MobiDAO {
+public class MobiDAOImpl implements IMobiDAO {
 
 	private JdbcTemplate mJdbcTemplate;
 	private String SQL_SEARCH_STRING = "select * from mobi where content like ";
