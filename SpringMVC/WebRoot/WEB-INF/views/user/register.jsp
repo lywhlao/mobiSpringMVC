@@ -24,9 +24,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
    <form action="/SpringMVC/register" method="post">
-    账号:<input type="text" name="userName"><br/>
-     密码:<input type="text" name="password"><br/>
-      邮箱:<input type="text" name="email"><br/>
+    账号:<input type="text" name="userName">(至少6个字符)<br/>
+     密码:<input type="password" name="password">(至少6个字符)<br/>
+      邮箱:<input type="text" name="email">(至少6个字符)<br/>
       <input type="submit" value="注册"><br/>
    </form>
   </body>

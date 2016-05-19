@@ -2,9 +2,11 @@ package base.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import base.bean.UserBean;
 import base.dao.IUserDAO;
+import base.util.Constent;
 
 @Service
 public class UserService {
@@ -15,6 +17,12 @@ public class UserService {
 	@Autowired
 	IUserDAO mUserDAO;
 
+	/**
+	 * 创建用户
+	 * 
+	 * @param userBean
+	 * @return
+	 */
 	public String createUser(UserBean userBean) {
 		boolean result = mUserDAO.createUser(userBean);
 		if (result) {
@@ -23,14 +31,35 @@ public class UserService {
 			return CREATE_USER_FAIL_VIEW;
 		}
 	}
-	
-	public void searchUser(String name){
-		UserBean userBean=mUserDAO.searchUser(name);
-		if(userBean==null){
-			//TODO
-		}else{
-			
+
+	/**
+	 * 查找用户
+	 * 
+	 * @param name
+	 */
+	public void searchUser(String name) {
+		UserBean userBean = mUserDAO.searchUser(name);
+		if (userBean == null) {
+			// TODO
+		} else {
+
 		}
 	}
-	
+
+
+	/**用户登录
+	 * @param userBean
+	 * @param model
+	 * @return
+	 */
+	public String login(UserBean userBean,Model model) {
+		boolean result = mUserDAO.login(userBean);
+		if (result) {
+			model.addAttribute("userBean",userBean);
+			return "redirect:/home";
+		} else {
+			return Constent.ERROR_PAGE;
+		}
+	}
+
 }

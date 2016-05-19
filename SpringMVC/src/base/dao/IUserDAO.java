@@ -12,4 +12,7 @@ public interface IUserDAO {
 
 	//更新密码
 	public boolean updatePaasword(UserBean userBean);
+	
+	//登录用户
+	public boolean login(UserBean userBean);
 }

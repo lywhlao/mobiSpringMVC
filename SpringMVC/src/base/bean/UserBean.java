@@ -15,7 +15,7 @@ public class UserBean {
 	
 	@NotNull
 	@Size(min = 6, max = 100)
-	private String eMail;
+	private String email;
 
 	public String getUserName() {
 		return userName;
@@ -33,12 +33,13 @@ public class UserBean {
 		this.password = password;
 	}
 
-	public String geteMail() {
-		return eMail;
+	public String getEmail() {
+		return email;
 	}
 
-	public void seteMail(String eMail) {
-		this.eMail = eMail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
+
 
 }

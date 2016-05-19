@@ -40,6 +40,8 @@ $(document).ready(function(){
 </head>
 
 <body>
+<div>你好,${userBean.getUserName()} </div>
+<br/>
 <button id="btn1" type="button">获得外部的内容</button>
 <div id="test"></div>
 	<c:forEach items="${list}" var="temp">
@@ -54,7 +56,8 @@ $(document).ready(function(){
 		<input type="radio" name="type" value="torrent" /> torrent<br /> <input
 			type="submit" value="开始搜索" /><br />
 	</form>
-	
+	<a href="/SpringMVC/login" >登录</a>
+	<br/>
 	<a href="/SpringMVC/register" >注册新用户</a>
 </body>
 </html>

@@ -32,7 +32,7 @@ public class EmailService {
 		helper.setSubject("你好Json");
 		FileSystemResource fileSystemResource = new FileSystemResource(
 				"c:\\通往市场之路.mobi");
-		helper.addAttachment("first.mobi", fileSystemResource);
+		//helper.addAttachment("first.mobi", fileSystemResource);
 		mailSender.send(mimeMessage);
 	}
 
