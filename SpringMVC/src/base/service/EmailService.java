@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import base.bean.MobiBean;
+import base.bean.UserBean;
 
 @Service
 public class EmailService {
@@ -23,16 +24,21 @@ public class EmailService {
 	TaskExecutor taskExecutor;
 
 	@Async("CustomThreadPool")
-	public void sendMobiEmail(MobiBean mobiBean) throws MessagingException {
+	public void sendMobiEmail(MobiBean mobiBean,UserBean userBean) throws MessagingException {
+		String email=userBean.getEmail();
+		if("".equals(email)){
+			return;
+		}
 		MimeMessage mimeMessage = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
-		helper.setFrom("jasonxtu@163.com");
-		helper.setTo("billxtu@163.com");
-		helper.setText("这是我第一次尝试发送带有附件的邮件！！！" + mobiBean.toString());
-		helper.setSubject("你好Json");
+		helper.setFrom("lywhlao@sohu.com");
+		//helper.setTo("billxtu@163.com");
+		helper.setTo(email);
+		helper.setText("这是我第一次尝试发送带有附件的邮件！！！" + userBean.getEmail()+";"+userBean.getUserName()+";"+userBean.getPassword());
+		helper.setSubject("你好Json！！！");
 		FileSystemResource fileSystemResource = new FileSystemResource(
-				"c:\\通往市场之路.mobi");
-		//helper.addAttachment("first.mobi", fileSystemResource);
+				"c:\\first.mobi");
+		helper.addAttachment("first.mobi", fileSystemResource);
 		mailSender.send(mimeMessage);
 	}
 

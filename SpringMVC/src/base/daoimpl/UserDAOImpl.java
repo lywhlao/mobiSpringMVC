@@ -12,7 +12,7 @@ public class UserDAOImpl implements IUserDAO {
 	private JdbcTemplate mJdbcTemplate;
 	private static final String CRATE_USER_STRING = "insert into user(name,password,email) values(?,?,?)";
 	private static final String QUERY_USER = "select * from user where name=?";
-	private static final String LOGIN = "select count(*) from user where name=? and password=?";
+	private static final String LOGIN = "select * from user where name=? and password=?";
 
 	public UserDAOImpl(JdbcTemplate jdbcTemplate) {
 		this.mJdbcTemplate = jdbcTemplate;
@@ -48,16 +48,14 @@ public class UserDAOImpl implements IUserDAO {
 
 
 	@Override
-	public boolean login(UserBean userBean) {
+	public UserBean login(UserBean userBean) {
 		String name = userBean.getUserName();
 		String password = userBean.getPassword();
-		// 加入MD5校验
-		int result = mJdbcTemplate.queryForObject(LOGIN, new Object[] { name,
-				password }, Integer.class);
-		if (result == 0) {
-			return false;
-		}
-		return true;
+		// 密码加入MD5校验
+		//TODO
+		UserBean result = mJdbcTemplate.queryForObject(LOGIN, new Object[] { name,
+				password }, new UserBeanMapper());
+		return result;
 	}
 
 }

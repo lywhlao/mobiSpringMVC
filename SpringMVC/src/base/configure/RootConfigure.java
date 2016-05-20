@@ -66,13 +66,15 @@ public class RootConfigure {
 	@Bean
 	public JavaMailSender mailSender() {
 		JavaMailSenderImpl mailSenderImpl = new JavaMailSenderImpl();
-		mailSenderImpl.setHost("smtp.163.com");
+		mailSenderImpl.setHost("smtp.sohu.com");
 		mailSenderImpl.setPort(25);
-		mailSenderImpl.setUsername("jasonxtu@163.com");
-		mailSenderImpl.setPassword("laojiaqi0219");
-
+		mailSenderImpl.setUsername("lywhlao@sohu.com");
+		mailSenderImpl.setPassword("laojiaqi0323");
+       
 		Properties properties = new Properties();
 		properties.put("mail.smtp.auth", true);
+		properties.put("mail.smtp.starttls.enable", true);
+		properties.put("mail.smtp.ssl.trust", "smtp.sohu.com");
 		properties.put("mail.smtp.timeout", 25000);
 
 		mailSenderImpl.setJavaMailProperties(properties);

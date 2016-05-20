@@ -53,9 +53,9 @@ public class UserService {
 	 * @return
 	 */
 	public String login(UserBean userBean,Model model) {
-		boolean result = mUserDAO.login(userBean);
-		if (result) {
-			model.addAttribute("userBean",userBean);
+		UserBean result = mUserDAO.login(userBean);
+		if (!result.isEmpty()) {
+			model.addAttribute("userBean",result);
 			return "redirect:/home";
 		} else {
 			return Constent.ERROR_PAGE;

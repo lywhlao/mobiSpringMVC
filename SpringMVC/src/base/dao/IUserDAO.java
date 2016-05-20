@@ -14,5 +14,5 @@ public interface IUserDAO {
 	public boolean updatePaasword(UserBean userBean);
 	
 	//登录用户
-	public boolean login(UserBean userBean);
+	public UserBean login(UserBean userBean);
 }

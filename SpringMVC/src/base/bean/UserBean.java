@@ -41,5 +41,12 @@ public class UserBean {
 		this.email = email;
 	}
 
+	public boolean isEmpty(){
+		if(!"".equals(userName)&&!"".equals("password")&&!"".equals(email)){
+			return false;
+		}else {
+			return true;
+		}
+	}
 
 }
