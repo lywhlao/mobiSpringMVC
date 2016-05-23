@@ -23,7 +23,6 @@ public class EmailService {
 	@Autowired
 	TaskExecutor taskExecutor;
 
-	@Async("CustomThreadPool")
 	public void sendMobiEmail(MobiBean mobiBean,UserBean userBean) throws MessagingException {
 		String email=userBean.getEmail();
 		if("".equals(email)){
@@ -32,9 +31,8 @@ public class EmailService {
 		MimeMessage mimeMessage = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
 		helper.setFrom("lywhlao@sohu.com");
-		//helper.setTo("billxtu@163.com");
 		helper.setTo(email);
-		helper.setText("这是我第一次尝试发送带有附件的邮件！！！" + userBean.getEmail()+";"+userBean.getUserName()+";"+userBean.getPassword());
+		helper.setText("" + userBean.getEmail()+";"+userBean.getUserName()+";"+userBean.getPassword());
 		helper.setSubject("你好Json！！！");
 		FileSystemResource fileSystemResource = new FileSystemResource(
 				"c:\\first.mobi");

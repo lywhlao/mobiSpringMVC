@@ -28,10 +28,9 @@ public class HomeController {
 
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	public String search(SearchBean searchBean, Model model) {
-		Pagination pagination = mMobiDAO.searchMobi(searchBean.getContent(),
-				DISPLAY_PAGE_NUM);
-		model.addAttribute("pagination", pagination);
-		return "searchResult";
+		String view = mMobiDAO.searchMobi(searchBean.getContent(),
+				DISPLAY_PAGE_NUM,model);
+		return view;
 	}
 
 	@RequestMapping(value = "/searchListPage/{content}/{page}", method = RequestMethod.GET)
@@ -39,9 +38,8 @@ public class HomeController {
 			@PathVariable int page, Model model)
 			throws UnsupportedEncodingException {
 		content = new String(content.getBytes("ISO-8859-1"), "utf8");
-		Pagination pagination = mMobiDAO.searchMobi(content, page);
-		model.addAttribute("pagination", pagination);
-		return "searchResult";
+		String view = mMobiDAO.searchMobi(content, page,model);
+		return view;
 	}
 
 }

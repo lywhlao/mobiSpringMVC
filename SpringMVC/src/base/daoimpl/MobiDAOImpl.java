@@ -1,9 +1,12 @@
 package base.daoimpl;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.ui.Model;
 
 import base.dao.IMobiDAO;
+import base.util.Constent;
 import base.util.Pagination;
+import base.util.StringUtil;
 
 public class MobiDAOImpl implements IMobiDAO {
 
@@ -15,11 +18,15 @@ public class MobiDAOImpl implements IMobiDAO {
 	}
 
 	@Override
-	public Pagination searchMobi(String content,int currentPage) {
+	public String searchMobi(String content,int currentPage,Model model) {
+		if(StringUtil.isEmpty(content)){
+			return Constent.ERROR_PAGE;
+		}
 		// 实现一些操作
 		String newContent = "'%" + content + "%'";
 		String searchSQL=SQL_SEARCH_STRING+newContent;
 		Pagination pagination=new Pagination(searchSQL,currentPage, Pagination.NUMBERS_PER_PAGE, mJdbcTemplate,content);
-		return pagination;
+		model.addAttribute("pagination",pagination);
+		return "searchResult";
 	}
 }

@@ -22,21 +22,7 @@
 <!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-<script type="text/javascript" src="jquery/jquery-1.12.3.min.js"></script>
-<script>
-$(document).ready(function(){
-  $("#btn1").click(function(){
-     $.post("/SpringMVC/sendEmail",{
-     content:"www.hello",
-     url:"www.world",
-     author:"laojiaqi",
-     description:"descrion"
-     },function(data,status){ 
-     alert("Data: " + data + "\nStatus: " + status);}
-     );
-  });
-});
-</script>
+<script src="jquery/jquery-1.12.4.js"></script>
 </head>
 
 <body>
@@ -50,12 +36,11 @@ $(document).ready(function(){
 		</div>
 	</c:forEach>
 
-	<form method="post" action="/SpringMVC/search">
-		输入需要查找的mobi名称<input type="text" name="content" /><br /> <input
-			type="radio" name="type" value="mobi" checked="checked" /> mobi<br />
-		<input type="radio" name="type" value="torrent" /> torrent<br /> <input
-			type="submit" value="开始搜索" /><br />
+	<form  id ="searchForm" method="post" action="/SpringMVC/search">
+		输入需要查找的mobi名称<input type="text" name="content" ><br /> 
+		<input type="submit" value="开始搜索" /><br />
 	</form>
+	
 	<a href="/SpringMVC/login" >登录</a>
 	<br/>
 	<a href="/SpringMVC/register" >注册新用户</a>
