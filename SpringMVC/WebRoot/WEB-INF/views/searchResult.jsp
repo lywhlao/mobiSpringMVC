@@ -22,7 +22,7 @@
 <!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-<script type="text/javascript" src="jquery/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="jquery/jquery.js"></script>
 <script>
 	$(document).ready(function() {
 		$("[data-content]").click(function() {

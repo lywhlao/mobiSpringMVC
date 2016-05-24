@@ -53,8 +53,13 @@ public class UserDAOImpl implements IUserDAO {
 		String password = userBean.getPassword();
 		// 密码加入MD5校验
 		//TODO
-		UserBean result = mJdbcTemplate.queryForObject(LOGIN, new Object[] { name,
-				password }, new UserBeanMapper());
+		UserBean result;
+		try {
+			result = mJdbcTemplate.queryForObject(LOGIN, new Object[] { name,
+					password }, new UserBeanMapper());
+		} catch (Exception e) {
+			result=null;
+		}
 		return result;
 	}
 

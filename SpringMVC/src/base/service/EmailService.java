@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 
 import base.bean.MobiBean;
 import base.bean.UserBean;
+import base.util.Constent;
+import base.util.FileUtil;
+import base.util.StringUtil;
 
 @Service
 public class EmailService {
@@ -23,20 +26,23 @@ public class EmailService {
 	@Autowired
 	TaskExecutor taskExecutor;
 
+	@Async("CustomThreadPool")
 	public void sendMobiEmail(MobiBean mobiBean,UserBean userBean) throws MessagingException {
 		String email=userBean.getEmail();
-		if("".equals(email)){
+		String content=mobiBean.getContent();
+		if(StringUtil.isEmpty(email)||StringUtil.isEmpty(content)){
 			return;
 		}
+		FileSystemResource fileSystemResource = new FileSystemResource(
+				FileUtil.getPath(mobiBean.getContent()));
+		
 		MimeMessage mimeMessage = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
 		helper.setFrom("lywhlao@sohu.com");
 		helper.setTo(email);
-		helper.setText("" + userBean.getEmail()+";"+userBean.getUserName()+";"+userBean.getPassword());
-		helper.setSubject("你好Json！！！");
-		FileSystemResource fileSystemResource = new FileSystemResource(
-				"c:\\first.mobi");
-		helper.addAttachment("first.mobi", fileSystemResource);
+		helper.setText(mobiBean.getContent()+"\n"+mobiBean.getDescription());
+		helper.setSubject(userBean.getUserName()+"您好");
+		helper.addAttachment(mobiBean.getContent(), fileSystemResource);
 		mailSender.send(mimeMessage);
 	}
 

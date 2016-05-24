@@ -54,11 +54,11 @@ public class UserService {
 	 */
 	public String login(UserBean userBean,Model model) {
 		UserBean result = mUserDAO.login(userBean);
-		if (!result.isEmpty()) {
+		if(result==null || result.isEmpty()){
+			return Constent.ERROR_PAGE;
+		}else {
 			model.addAttribute("userBean",result);
 			return "redirect:/home";
-		} else {
-			return Constent.ERROR_PAGE;
 		}
 	}
 

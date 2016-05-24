@@ -22,7 +22,16 @@
 <!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-<script src="jquery/jquery-1.12.4.js"></script>
+<script src="jquery/jquery.js"></script>
+<script src="jquery/jquery.validate.js"></script>
+<script src="jquery/jquery.metadata.js"></script>
+<script src="jquery/jquery.validate.messages_cn.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#searchForm").validate({meta:"validate"});
+});
+</script>
+
 </head>
 
 <body>
@@ -37,12 +46,13 @@
 	</c:forEach>
 
 	<form  id ="searchForm" method="post" action="/SpringMVC/search">
-		输入需要查找的mobi名称<input type="text" name="content" ><br /> 
-		<input type="submit" value="开始搜索" /><br />
+		输入需要查找的mobi名称<input type="text" name="content" class="{validate:{required:true,messages:{required:'请输入搜索内容'}}}" ><br /> 
+		<input class="submit" type="submit" value="开始搜索" /><br />
 	</form>
 	
 	<a href="/SpringMVC/login" >登录</a>
 	<br/>
 	<a href="/SpringMVC/register" >注册新用户</a>
+	
 </body>
 </html>
