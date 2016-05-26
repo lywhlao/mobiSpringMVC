@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import base.bean.MobiBean;
 import base.bean.UserBean;
-import base.util.Constent;
 import base.util.FileUtil;
 import base.util.StringUtil;
 
@@ -25,6 +24,7 @@ public class EmailService {
 	
 	@Autowired
 	TaskExecutor taskExecutor;
+
 
 	@Async("CustomThreadPool")
 	public void sendMobiEmail(MobiBean mobiBean,UserBean userBean) throws MessagingException {
@@ -38,10 +38,10 @@ public class EmailService {
 		
 		MimeMessage mimeMessage = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
-		helper.setFrom("lywhlao@sohu.com");
+		helper.setFrom("jasonxtu@163.com");
 		helper.setTo(email);
-		helper.setText(mobiBean.getContent()+"\n"+mobiBean.getDescription());
-		helper.setSubject(userBean.getUserName()+"您好");
+		helper.setText("很高兴能够使用本网站，您此次浏览的书籍的是"+mobiBean.getContent()+"\n"+mobiBean.getDescription());
+		helper.setSubject("尊敬先生|女士 您好!");
 		helper.addAttachment(mobiBean.getContent(), fileSystemResource);
 		mailSender.send(mimeMessage);
 	}

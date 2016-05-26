@@ -22,13 +22,17 @@
 <!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-<script type="text/javascript" src="jquery/jquery.js"></script>
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"
+	type="text/css">
+<link href="bootstrap/css/custom.css" rel="stylesheet" type="text/css">
+<script src="jquery/jquery.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
 <script>
 	$(document).ready(function() {
 		$("[data-content]").click(function() {
-		    var value=$(this).data("content");
+			var value = $(this).data("content");
 			$.post("/SpringMVC/sendEmail", {
-				content: value
+				content : value
 			}, function(data, status) {
 				alert("Data: " + data + "\nStatus: " + status);
 			});
@@ -38,24 +42,48 @@
 </head>
 
 <body>
-<div>你好,${userBean.getUserName()} </div>
-	<c:forEach items="${pagination.getResultList()}" var="temp">
-		<div>
-			<c:out value="《${temp['content']}》" />
-			<c:out value="作者: ${temp['author']}" />
-			<a href="<c:url value="${temp['url']}"/>"><c:out
-					value="${temp['url']}" /></a>
-			<button data-content="${temp['content']}" type="button">发送到邮箱！！</button>
-			<br>
-			<c:out value="内容简介: ${temp['description']}" />
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3 col-md-offset-9">
+				<ul class="nav nav-pills">
+					<li class="active"><a href="#">Home</a></li>
+					<li><a href="#">SVN</a></li>
+					<li><a href="#">iOS</a></li>
+					<li><a href="#">VB.Net</a></li>
+					<li><a href="#">Java</a></li>
+					<li><a href="#">PHP</a></li>
+				</ul>
+			</div>
 		</div>
-		<br />
-		<br />
-	</c:forEach>
-	<c:forEach var="i" begin="1" end="${pagination.getTotalPages()}">
-		<a
-			href="<c:url value='/searchListPage/${pagination.getContent()}/${i}'/>">${i}</a>
-	</c:forEach>
-	<div id="myDiv"></div>
+		<div class="row">
+			<div>你好,${userBean.getUserName()}</div>
+			<c:forEach items="${pagination.getResultList()}" var="temp">
+				<div class="panel panel-success">
+					<div class="panel-heading">
+						<span class="glyphicon glyphicon-book"></span>
+						<c:out value="《${temp['content']}》" />
+						<span class="glyphicon glyphicon-user"></span>
+						<c:out value="作者: ${temp['author']}" />
+						<button data-content="${temp['content']}" type="button" class="btn btn-primary">
+						<span class="glyphicon glyphicon-envelope"></span>发送到邮箱</button>
+					</div>
+					<div class="panel-body">
+						<span class="label label-pill label-info">内容简介:</span></h3>
+						<c:out value="${temp['description']}" />
+					</div>
+				</div>
+			</c:forEach>
+		</div>
+		<div class=text-center>
+			<ul class="pagination">
+				<c:forEach var="i" begin="1" end="${pagination.getTotalPages()}">
+					<li class="${pagination.getPage()==i?'active':''}"><a
+						href="<c:url value='/searchListPage/${pagination.getContent()}/${i}'/>">${i}</a>
+					</li>
+				</c:forEach>
+			</ul>
+		</div>
+	</div>
 </body>
 </html>

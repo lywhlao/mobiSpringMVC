@@ -19,40 +19,70 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"
+	type="text/css">
+<link href="bootstrap/css/custom.css" rel="stylesheet" type="text/css">
 <script src="jquery/jquery.js"></script>
 <script src="jquery/jquery.validate.js"></script>
 <script src="jquery/jquery.metadata.js"></script>
 <script src="jquery/jquery.validate.messages_cn.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){
-	$("#searchForm").validate({meta:"validate"});
-});
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script>
+	$(document).ready(function() {
+		$("#searchForm").validate({
+			rules : {
+				content : {
+					required : true,
+				}
+			},
+			messages : {
+				content : {
+					required : "请输入需要搜索的内容"
+				}
+			}
+		});
+	});
 </script>
 
 </head>
 
 <body>
-<div>你好,${userBean.getUserName()} </div>
-<br/>
-<button id="btn1" type="button">获得外部的内容</button>
-<div id="test"></div>
-	<c:forEach items="${list}" var="temp">
-		<div>
-			<c:out value="${temp}" />
-		</div>
-	</c:forEach>
 
-	<form  id ="searchForm" method="post" action="/SpringMVC/search">
-		输入需要查找的mobi名称<input type="text" name="content" class="{validate:{required:true,messages:{required:'请输入搜索内容'}}}" ><br /> 
-		<input class="submit" type="submit" value="开始搜索" /><br />
-	</form>
-	
-	<a href="/SpringMVC/login" >登录</a>
-	<br/>
-	<a href="/SpringMVC/register" >注册新用户</a>
-	
+   <div class="jumbotron vertical-center">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-9 col-md-offset-3">
+				<div class="row">
+					<div class="col-md-3 col-md-offset-2">
+						<h1>Kindle</h1>
+					</div>
+				</div>
+				<form class="form-horizontal" role="form" id="searchForm"
+					method="post" action="/SpringMVC/search">
+					<div class="form-group">
+						<div class="col-md-7">
+							<input type="text" class="form-control" id="content"
+								name="content" placeholder="请输入书名">
+						</div>
+						<div class="col-md-1">
+							<button type="submit" class="btn btn-default">开始搜索</button>
+						</div>
+					</div>
+				</form>
+				<div class="row">
+					<div class="col-md-3 col-md-offset-2">
+						<a href="/SpringMVC/login" class="btn btn-success btn-lg"
+							role="button">登录</a> <a href="/SpringMVC/register"
+							class="btn btn-info btn-lg" role="button">注册</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 </body>
 </html>
