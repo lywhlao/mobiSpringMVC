@@ -12,14 +12,14 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>My JSP 'home.jsp' starting page</title>
+<title>欢迎来到kindle乐园</title>
 
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
@@ -51,8 +51,8 @@
 </head>
 
 <body>
-
-   <div class="jumbotron vertical-center">
+	<br>
+	<br>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-9 col-md-offset-3">
@@ -83,6 +83,38 @@
 			</div>
 		</div>
 	</div>
-</div>
+	<br>
+	<br>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						<h3 class="panel-title">随便看看</h3>
+					</div>
+					<div class="panel-body">这是一个基本的面板</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="panel panel-danger">
+					<div class="panel-heading">
+						<h3 class="panel-title">热门下载</h3>
+					</div>
+					<div class="panel-body">这是一个基本的面板</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">猜你喜欢</h3>
+					</div>
+					<div class="panel-body">这是一个基本的面板</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer class="container-fluid text-center">
+  	<p>本站所有资源均来自互联网！！！</p>
+		</footer>
 </body>
 </html>

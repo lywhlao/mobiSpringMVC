@@ -15,4 +15,6 @@ public class Constent {
 	public static final String RESOURCE_NOT_FOUND="resource_not_found";
 	
 	public static final String DEFAULT_USER_NAME="defalut_user_name";
+	
+	public static final String RECORD_SUCCESS="record_success";
 }

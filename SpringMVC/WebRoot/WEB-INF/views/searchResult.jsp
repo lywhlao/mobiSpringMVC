@@ -12,7 +12,7 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>My JSP 'searchResult.jsp' starting page</title>
+<title>搜索结果</title>
 
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
@@ -37,27 +37,53 @@
 				alert("Data: " + data + "\nStatus: " + status);
 			});
 		});
+
+		$(".row a").click(function() {
+			var value = $(this).attr("id")
+			$.post("/SpringMVC/recordDownload", {
+				content : value
+			}, function(data, status) {
+				alert("Data: " + data + "\nStatus: " + status);
+			});
+		});
+		//
+		/*$("ul.pagination a").click(function() {
+		    var value="${pagination.getContent()}";
+			var page = $(this).text();
+			alert(value+page);
+			$.get("/SpringMVC/sendEmail/"+value+"/"+page,function(data,textStatus){
+			 alert("回调"+textStatus);
+			});
+		});
+		 */
 	});
 </script>
 </head>
 
 <body>
-
 	<div class="container">
 		<div class="row">
-			<div class="col-md-3 col-md-offset-9">
-				<ul class="nav nav-pills">
-					<li class="active"><a href="#">Home</a></li>
-					<li><a href="#">SVN</a></li>
-					<li><a href="#">iOS</a></li>
-					<li><a href="#">VB.Net</a></li>
-					<li><a href="#">Java</a></li>
-					<li><a href="#">PHP</a></li>
-				</ul>
+			<div class="col-md-9 col-md-offset-3">
+				<div class="row">
+					<div class="col-md-3 col-md-offset-2">
+						<h1>Kindle</h1>
+					</div>
+					<form class="form-horizontal" role="form" id="searchForm"
+						method="post" action="/SpringMVC/search">
+						<div class="form-group">
+							<div class="col-md-7">
+								<input type="text" class="form-control" id="content"
+									name="content" placeholder="请输入书名">
+							</div>
+							<div class="col-md-1">
+								<button type="submit" class="btn btn-default">开始搜索</button>
+							</div>
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
 		<div class="row">
-			<div>你好,${userBean.getUserName()}</div>
 			<c:forEach items="${pagination.getResultList()}" var="temp">
 				<div class="panel panel-success">
 					<div class="panel-heading">
@@ -65,11 +91,19 @@
 						<c:out value="《${temp['content']}》" />
 						<span class="glyphicon glyphicon-user"></span>
 						<c:out value="作者: ${temp['author']}" />
-						<button data-content="${temp['content']}" type="button" class="btn btn-primary">
-						<span class="glyphicon glyphicon-envelope"></span>发送到邮箱</button>
+						<button data-content="${temp['content']}" type="button"
+							class="btn btn-primary">
+							<span class="glyphicon glyphicon-envelope"></span> 发送到邮箱
+						</button>
+						<a  id="${temp['content']}" type="button"
+							class="btn btn-primary" href="${temp['url']}" role="button">
+							<span class="glyphicon glyphicon-download"></span> 直接下载
+						</a>
 					</div>
 					<div class="panel-body">
-						<span class="label label-pill label-info">内容简介:</span></h3>
+						<span
+							class="label label-pill label-info glyphicon glyphicon-hand-right desc-font desc-margin">
+							内容简介:</span>
 						<c:out value="${temp['description']}" />
 					</div>
 				</div>

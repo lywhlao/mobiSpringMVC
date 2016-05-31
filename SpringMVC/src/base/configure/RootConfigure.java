@@ -22,8 +22,10 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import base.dao.IMobiDAO;
+import base.dao.IRecommandDAO;
 import base.dao.IUserDAO;
 import base.daoimpl.MobiDAOImpl;
+import base.daoimpl.RecommandDAOimpl;
 import base.daoimpl.UserDAOImpl;
 
 //配置非web方面的bean
@@ -61,6 +63,12 @@ public class RootConfigure {
 	public IUserDAO getUserDAO(JdbcTemplate jdbcTemplate) {
 		return new UserDAOImpl(jdbcTemplate);
 	}
+	
+    @Bean	
+	public IRecommandDAO getRecommandDAO(JdbcTemplate jdbcTemplate){
+		return new RecommandDAOimpl(jdbcTemplate);
+	}
+	
 
 	// 邮件发送
 	@Bean
@@ -81,6 +89,7 @@ public class RootConfigure {
 		return mailSenderImpl;
 	}
 
+	//线程池
 	@Bean(name = "CustomThreadPool")
 	public TaskExecutor taskExecutor() {
 		ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
@@ -91,6 +100,7 @@ public class RootConfigure {
 		return taskExecutor;
 	}
 	
+	//校验
 	@Bean(name="CustomValidator")
 	public org.springframework.validation.Validator getValidator() {
 		return new LocalValidatorFactoryBean();
