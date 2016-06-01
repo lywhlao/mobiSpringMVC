@@ -38,7 +38,7 @@ public class EmailService {
 		if (StringUtil.isEmpty(email) || StringUtil.isEmpty(content)) {
 			return;
 		}
-		//TODO
+		//TODO 开启此项
 	//	setEmailContent(mobiBean, email);
         recordDownload(content,userName);
 	}
@@ -63,7 +63,7 @@ public class EmailService {
 		FileSystemResource fileSystemResource = new FileSystemResource(
 				FileUtil.getPath(mobiBean.getContent()));
 		
-		MimeMessage mimeMessage = mailSender.createMimeMessage();
+		MimeMessage mimeMessage = mMailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
 		helper.setFrom("jasonxtu@163.com");
 		helper.setTo(email);

@@ -32,6 +32,7 @@
 <script src="jquery/jquery.validate.messages_cn.js"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <script>
+
 	$(document).ready(function() {
 		$("#searchForm").validate({
 			rules : {
@@ -45,6 +46,17 @@
 				}
 			}
 		});
+	/*	var userName = "${userBean.getUserName()}";
+	 	alert("!"+userName+"!");
+		if (userName != "") {
+		    alert(userName+"!!!");
+			$("#user_login").hide();
+			$("#user_register").hide();
+		} else {
+		    alert(userName+"!!!");
+			$("#user_login").show();
+			$("#user_register").show();
+		} */
 	});
 </script>
 
@@ -74,12 +86,15 @@
 					</div>
 				</form>
 				<div class="row">
-					<div class="col-md-3 col-md-offset-2">
-						<a href="/SpringMVC/login" class="btn btn-success btn-lg"
-							role="button">登录</a> <a href="/SpringMVC/register"
-							class="btn btn-info btn-lg" role="button">注册</a>
-					</div>
+					<c:if test="${empty userBean.getUserName()}">
+						<div class="col-md-3 col-md-offset-2">
+							<a id="user_login" href="/SpringMVC/login" class="btn btn-success btn-lg"
+							role="button">登录</a> 
+							<a id="user_register" href="/SpringMVC/register" class="btn btn-info btn-lg" role="button">注册</a>
+						</div>
+					</c:if>
 				</div>
+				
 			</div>
 		</div>
 	</div>
