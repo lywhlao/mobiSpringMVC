@@ -40,20 +40,37 @@ public class RecommendService {
 	 * @param user 当前用户
 	 */
 	public void recordDowload(String content,String user){
-		//TODO
+		//TODO 记录下载
 		//Date currentTime=new Date(System.currentTimeMillis());
 		//mRecommandDAO.recordDowload(content, user, currentTime);
-		generateRecommend();
+		//generateRecommend();
+		getRecommendContentByUser(user);
 	}
 	
 	
+	/**
+	 * 生成推荐
+	 */
 	public void generateRecommend(){
 		clearContainer();
 		setContentData();
 		fillAllUserToItem();
-		showMap();
+	//	showMap();
 		caculateContentSimilar();
+		recordSimilar();
 	}
+	
+	/**通过用户名返回推荐内容
+	 * @param userName
+	 */
+	public  List<ContentSimilarBean> getRecommendContentByUser(String userName){
+     List<ContentSimilarBean>  contentSimilarList=mRecommandDAO.getRecommendList(userName);
+	  for(ContentSimilarBean temp:contentSimilarList){
+		  System.out.println(temp.getContentDest()+" "+temp.getSimilar());
+	  }
+	  return contentSimilarList;
+	}
+	
 	
 	/**
 	 * 从数据库获取内容，并存储到相应数据结构
@@ -118,10 +135,14 @@ public class RecommendService {
 	 * 清除数据结构
 	 */
 	private void clearContainer(){
+		mSimilarList.clear();
 		mContentMap.clear();
 		mUserSet.clear();
 	}
 	
+	/**
+	 * 计算所有的书籍的相似度
+	 */
 	private void caculateContentSimilar(){
 		List<String> contentList = new ArrayList<String>(mContentMap.keySet());
 		int length = contentList.size();
@@ -129,12 +150,19 @@ public class RecommendService {
 			String contentSource = contentList.get(i);
 			for (int j = i + 1; j < length; j++) {
 				String contentDest = contentList.get(j);
-				double value=cacluete(mContentMap.get(contentSource),mContentMap.get(contentDest));
-				System.out.println(contentSource+"  "+contentDest+ " value = "+value);
+				double similar=cacluete(mContentMap.get(contentSource),mContentMap.get(contentDest));
+				ContentSimilarBean tempBean=new ContentSimilarBean(contentSource,contentDest,similar);
+				mSimilarList.add(tempBean);
 			}
 		}
 	}
 	
+	/**
+	 * 计算两个书籍之间的相似度
+	 * @param contentSourceMap
+	 * @param contentDestMap
+	 * @return
+	 */
 	private double cacluete(Map<String,Integer>contentSourceMap,Map<String,Integer> contentDestMap){
 		Iterator<String> userIterator=contentSourceMap.keySet().iterator();
 		double sum=0;
@@ -150,5 +178,11 @@ public class RecommendService {
 		return similarValue;
 	}
 	
+	/**
+	 * 记录相似度的值到数据库
+	 */
+	public void recordSimilar(){
+		mRecommandDAO.recordSimlar(mSimilarList);
+	}
 
 }

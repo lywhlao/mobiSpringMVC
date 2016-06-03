@@ -5,6 +5,16 @@ public class ContentSimilarBean {
 	String contentSource;
 	String contentDest;
 	double Similar;
+	
+	public ContentSimilarBean(){
+		
+	}
+	
+	public ContentSimilarBean(String contentSource,String contentDest,double Similar){
+		this.contentSource=contentSource;
+		this.contentDest=contentDest;
+		this.Similar=Similar;
+	}
 
 	public String getContentSource() {
 		return contentSource;
