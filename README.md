@@ -5,7 +5,7 @@
 >mobiFile is gernerated by the spider based on SCRAPY.  
 >   
 >The website I crawled is www.kankindle.com.You can find the spider named *The-mobi-spider*in my reposite.I will update it for more stronger.  
->
+
 ###2.Server-Sider:
 >Obviously,I use Spring-Framedwork.It has many functions:
 >>1.you can search the mobi file.  
