@@ -6,7 +6,7 @@
 >   
 >The website I crawled is www.kankindle.com.You can find the spider named *The-mobi-spider*in my reposite.I will update it for more stronger.  
 
-###2.Server-Sider:
+###2.Server-Side:
 >Obviously,I use Spring-Framedwork.It has many functions:
 >>1.you can search the mobi file.  
 >2.you can send the mobi file to your kindle if you have add the *jasonXTU@163.com* to your email allow list in amazon.  
@@ -14,3 +14,5 @@
 
 ###3.Web-side
 >I use BootStrap,and the design is by myself.If you have some suggestion you can email me *lywhlao@163.com*
+
+ps:forgive my poor english^_^。
