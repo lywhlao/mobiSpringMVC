@@ -17,4 +17,8 @@ public class Constent {
 	public static final String DEFAULT_USER_NAME="defalut_user_name";
 	
 	public static final String RECORD_SUCCESS="record_success";
+	
+	public static final String GET_RECOMMEND_FAIL="get_recommend_fail";
+	
+	public static final String GET_RECOMMEND_SUCCESS="get_recommend_success";
 }

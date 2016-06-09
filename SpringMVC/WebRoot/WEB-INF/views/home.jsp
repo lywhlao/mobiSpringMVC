@@ -46,18 +46,40 @@
 				}
 			}
 		});
-	/*	var userName = "${userBean.getUserName()}";
-	 	alert("!"+userName+"!");
-		if (userName != "") {
-		    alert(userName+"!!!");
-			$("#user_login").hide();
-			$("#user_register").hide();
-		} else {
-		    alert(userName+"!!!");
-			$("#user_login").show();
-			$("#user_register").show();
-		} */
+		getRecommandContent();
 	});
+</script>
+
+<script type="text/javascript">
+	/*获得推荐内容 */
+   function getRecommandContent(){
+	var userName = "${userBean.getUserName()}";
+	if(userName==""){
+		   $.ajax({
+			headers : {
+				Accept : "application/json"
+			},
+			url : "/SpringMVC/getRecommendContent",
+			type : "POST",
+			dataType : "json",
+			success : function(response) {
+				if(response.resultCode==0){
+					var list=response.data;
+					for(item in list){
+						alert(list[item].description+"!!!!!!");
+					}
+				}else{
+				   
+
+				}
+			},
+			error : function(xhr, ajaxOptions, thrownError) {
+				  alert(xhr.status);
+				  alert(thrownError);
+			}
+		});
+	}
+	}
 </script>
 
 </head>

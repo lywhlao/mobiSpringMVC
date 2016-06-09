@@ -28,7 +28,7 @@ public class RecommandDAOimpl implements IRecommandDAO {
 			+ "on u.content=c.content_source where u.name=? and "
 			+ "c.content_dest not in ( SELECT content from user_download "
 			+ "WHERE user_download.name= ?) "
-			+ "ORDER BY c.similar DESC) new_table "
+			+ "ORDER BY c.similar DESC) new_table join mobi on new_table.content_dest=mobi.content "
 			+ "GROUP BY new_table.content_dest "
 			+ "ORDER BY new_table.similar DESC ";
 	

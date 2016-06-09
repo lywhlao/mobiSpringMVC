@@ -16,6 +16,9 @@ public class ContentRecommandMapper implements RowMapper<ContentSimilarBean>{
 		contentSimilarBean.setContentSource(rs.getString("content_source"));
 		contentSimilarBean.setContentDest(rs.getString("content_dest"));
 		contentSimilarBean.setSimilar(rs.getDouble("similar"));
+		contentSimilarBean.setUrl(rs.getString("url"));
+		contentSimilarBean.setAuthor(rs.getString("author"));
+		contentSimilarBean.setDescription(rs.getString("description"));
 		return contentSimilarBean;
 	}
 

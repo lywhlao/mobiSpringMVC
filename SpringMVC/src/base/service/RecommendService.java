@@ -44,7 +44,6 @@ public class RecommendService {
 		//Date currentTime=new Date(System.currentTimeMillis());
 		//mRecommandDAO.recordDowload(content, user, currentTime);
 		//generateRecommend();
-		getRecommendContentByUser(user);
 	}
 	
 	

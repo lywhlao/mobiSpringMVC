@@ -1,8 +1,14 @@
 package base.web.control;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -11,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import base.bean.ContentSimilarBean;
+import base.bean.ResponseData;
 import base.bean.UserBean;
 import base.service.RecommendService;
 import base.util.Constent;
@@ -49,5 +57,22 @@ public class RecommandController {
 		}
 		String ipString = httpServletRequest.getRemoteAddr();
 		return ipString;
+	}
+	
+	@RequestMapping(value = "/getRecommendContent", headers={"Accept=application/json"},method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseData<List<ContentSimilarBean>> getRecommendContent(@ModelAttribute UserBean userBean) {
+		System.out.println("!!!!!!!!!收到请求");
+//		String userName = userBean.getUserName();
+//		if (StringUtil.isEmpty(userName)) {
+//			return Constent.NOT_LOGIN;
+//		}
+//		return Constent.RECORD_SUCCESS;
+		List<ContentSimilarBean> list=mRecommendService.getRecommendContentByUser("aaaaaa");
+		ResponseData<List<ContentSimilarBean>> data=new ResponseData<List<ContentSimilarBean>>();
+		data.setResultCode(0);
+		data.setMessage("成功");
+		data.setData(list);
+		return data;
 	}
 }
