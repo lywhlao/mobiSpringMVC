@@ -3,14 +3,18 @@ package base.daoimpl;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import base.bean.ContentSimilarBean;
 import base.bean.DownloadRecordBean;
+import base.bean.MobiBean;
 import base.dao.IRecommandDAO;
 import base.mapper.ContentRecommandMapper;
 import base.mapper.DownloadRecordMapper;
+import base.mapper.MobiBeanMapper;
+import base.util.Constent;
 
 public class RecommandDAOimpl implements IRecommandDAO {
 
@@ -32,7 +36,12 @@ public class RecommandDAOimpl implements IRecommandDAO {
 			+ "GROUP BY new_table.content_dest "
 			+ "ORDER BY new_table.similar DESC ";
 	
+	private static final String GET_HOT_CONTENT = "select mobi.content,mobi.url,mobi.author,mobi.description from mobi join "
+			+ "(SELECT user_download.content,count(*) num FROM user_download GROUP BY user_download.content) new_table "
+			+ " on mobi.content=new_table.content"
+			+ " limit "+Constent.ROW_NUM_LIMIT;
 	
+	private static final String GET_RANDOM_CONTENT="select * from mobi limit ? ,"+Constent.ROW_NUM_LIMIT;
 	
 	
 	public RecommandDAOimpl(JdbcTemplate jdbcTemplate) {
@@ -81,6 +90,30 @@ public class RecommandDAOimpl implements IRecommandDAO {
 		}
 		
 		return contentSimilarList;
+	}
+
+	@Override
+	public List<MobiBean> getHotContent() {
+		List<MobiBean> list=new ArrayList<MobiBean>();
+		try {
+			list=mJdbcTemplate.query(GET_HOT_CONTENT, new MobiBeanMapper());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List<MobiBean> getRandomContent() {
+		Random random=new Random();
+		int num=random.nextInt(Constent.CONTENT_SUM_NUM);
+		List<MobiBean> list=new ArrayList<MobiBean>();
+		try {
+			list=mJdbcTemplate.query(GET_RANDOM_CONTENT, new MobiBeanMapper(),num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 	
 	

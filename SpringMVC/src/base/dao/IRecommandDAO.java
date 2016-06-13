@@ -5,6 +5,7 @@ import java.util.List;
 
 import base.bean.ContentSimilarBean;
 import base.bean.DownloadRecordBean;
+import base.bean.MobiBean;
 
 public interface IRecommandDAO {
 
@@ -36,5 +37,16 @@ public interface IRecommandDAO {
 	 * @return
 	 */
 	public List<ContentSimilarBean> getRecommendList(String userName);
+	
+	
+	/**获得热门内容
+	 * @return
+	 */
+	public List<MobiBean> getHotContent();
+	
+	/**获得随机内容
+	 * @return
+	 */
+	public List<MobiBean> getRandomContent();
 	
 }

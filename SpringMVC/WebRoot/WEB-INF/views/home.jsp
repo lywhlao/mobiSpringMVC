@@ -46,6 +46,8 @@
 			}
 		});
 		getRecommandContent();
+		getHotContent();
+		getRandomContent();
 	});
 </script>
 
@@ -76,9 +78,9 @@
 					     $li_item.attr("data-placement","top");
 					 }
 					 ul.append($li_item);
-					 $(".list-group-item").popover({trigger: "hover"});
+					 $("a[data-trigger=hover]").popover({trigger: "hover"});
 				}
-				$(".list-group-item").bind("click",function(){
+				$("a[data-trigger=hover]").bind("click",function(){
 				    var contentName=$(this).attr("data-original-title").split("--")[0];
 					recordDownload(contentName)
 				});
@@ -92,6 +94,7 @@
 		}
 	});
 	}
+
 	//记录下载记录
 	function recordDownload(value){
 	$.post("/SpringMVC/recordDownload", {
@@ -100,6 +103,91 @@
 				alert("Data: " + data + "\nStatus: " + status);
 			});
 	}
+	
+	//获得热门推荐
+	function getHotContent(){
+	   $.ajax({
+		headers : {
+			Accept : "application/json"
+		},
+		url : "/SpringMVC/getHotContent",
+		type : "POST",
+		dataType : "json",
+		success : function(response) {
+			if(response.resultCode==0){
+			    var ul=$("#hot-ul");
+				var list=response.data;
+				for(item in list){
+				     var $li_item=$("<a class='list-group-item text-center list-item' data-trigger='hover'  rel='popover'></a>");
+				     $li_item.text(list[item].content);
+				     $li_item.attr("href",list[item].url);
+				     $li_item.attr("data-content",list[item].description.substr(0,200)+"...");
+				     $li_item.attr("data-original-title",list[item].content+"--"+list[item].author);
+					 if(item<4){
+						 $li_item.attr("data-placement","left");
+					 }else{
+					     $li_item.attr("data-placement","top");
+					 }
+					 ul.append($li_item);
+					 $("a[data-trigger=hover]").popover({trigger: "hover"});
+				}
+				$("a[data-trigger=hover]").bind("click",function(){
+				    var contentName=$(this).attr("data-original-title").split("--")[0];
+					recordDownload(contentName)
+				});
+			}else{
+			   
+              //TODO
+			}
+		},
+		error : function(xhr, ajaxOptions, thrownError) {
+			  alert(xhr.status+thrownError);
+		}
+	});
+	}
+	
+	//获得随机内容
+	function getRandomContent(){
+		   $.ajax({
+		headers : {
+			Accept : "application/json"
+		},
+		url : "/SpringMVC/getRandomContent",
+		type : "POST",
+		dataType : "json",
+		success : function(response) {
+			if(response.resultCode==0){
+			    var ul=$("#random-ul");
+				var list=response.data;
+				for(item in list){
+				     var $li_item=$("<a class='list-group-item text-center list-item' data-trigger='hover'  rel='popover '></a>");
+				     $li_item.text(list[item].content);
+				     $li_item.attr("href",list[item].url);
+				     $li_item.attr("data-original-title",list[item].content+"--"+list[item].author);
+				     if(list[item].description.length==0){
+				      	$li_item.attr("data-content","暂且无介绍，敬请期待");
+				     }else{
+				     	$li_item.attr("data-content",list[item].description.substr(0,200)+"...");
+				     }
+					 $li_item.attr("data-placement","right");
+					 ul.append($li_item);
+					 $("a[data-trigger=hover]").popover({trigger: "hover"});
+				}
+				$("a[data-trigger=hover]").bind("click",function(){
+				    var contentName=$(this).attr("data-original-title").split("--")[0];
+					recordDownload(contentName)
+				});
+			}else{
+			   
+              //TODO
+			}
+		},
+		error : function(xhr, ajaxOptions, thrownError) {
+			  alert(xhr.status+thrownError);
+		}
+	});
+	}
+	
 	
 </script>
 
@@ -146,20 +234,14 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-4">
-				<div class="panel panel-info">
-					<div class="panel-heading">
-						<h3 class="panel-title">随便看看</h3>
-					</div>
-					<div class="panel-body">这是一个基本的面板</div>
-				</div>
+				<ul class="list-group" id="random-ul">
+				 	<li  class="list-group-item list-group-item-info text-center list-title">随便看看</li>
+				</ul>
 			</div>
 			<div class="col-sm-4">
-				<div class="panel panel-danger">
-					<div class="panel-heading">
-						<h3 class="panel-title">热门下载</h3>
-					</div>
-					<div class="panel-body">这是一个基本的面板</div>
-				</div>
+				<ul class="list-group" id="hot-ul">
+				 	<li  class="list-group-item list-group-item-danger text-center list-title">热门推荐</li>
+				</ul>
 			</div>
 			<div class="col-sm-4">
 				<ul class="list-group" id="recommend-ul">

@@ -16,7 +16,11 @@ import org.springframework.stereotype.Component;
 
 import base.bean.ContentSimilarBean;
 import base.bean.DownloadRecordBean;
+import base.bean.MobiBean;
+import base.bean.ResponseData;
 import base.dao.IRecommandDAO;
+import base.util.Constent;
+import base.util.StringUtil;
 
 @Component
 public class RecommendService {
@@ -59,17 +63,34 @@ public class RecommendService {
 		recordSimilar();
 	}
 	
-	/**通过用户名返回推荐内容
+	/**
+	 * 通过用户名返回推荐内容
+	 * 
 	 * @param userName
 	 */
-	public  List<ContentSimilarBean> getRecommendContentByUser(String userName){
-     List<ContentSimilarBean>  contentSimilarList=mRecommandDAO.getRecommendList(userName);
-	  for(ContentSimilarBean temp:contentSimilarList){
-		  System.out.println(temp.getContentDest()+" "+temp.getSimilar());
-	  }
-	  return contentSimilarList;
+	public ResponseData<List<ContentSimilarBean>> getRecommendContentByUser(String userName) {
+		if (StringUtil.isEmpty(userName)) {
+			userName = Constent.DEFAULT_RECOMMAND_USER;
+		}
+		List<ContentSimilarBean> contentSimilarList = mRecommandDAO.getRecommendList(userName);
+		ResponseData<List<ContentSimilarBean>> data=setResponseData(contentSimilarList);
+		return data;
 	}
 	
+	/**根据列表长度，设置反馈信息
+	 * @param list
+	 * @return
+	 */
+	public ResponseData<List<ContentSimilarBean>> setResponseData(List<ContentSimilarBean> list){
+		ResponseData<List<ContentSimilarBean>> data=new ResponseData<List<ContentSimilarBean>>();
+		if(list.size()<=0){
+			data.setResultCode(Constent.FAIL_CODE);	
+		}else{
+			data.setResultCode(Constent.SUCCESS_CODE);
+			data.setData(list);
+		}
+		return data;
+	}
 	
 	/**
 	 * 从数据库获取内容，并存储到相应数据结构
@@ -184,4 +205,33 @@ public class RecommendService {
 		mRecommandDAO.recordSimlar(mSimilarList);
 	}
 
+	/**获得热门推荐内容
+	 * @return
+	 */
+	public ResponseData<List<MobiBean>> getHotContent(){
+		List<MobiBean> list=mRecommandDAO.getHotContent();
+		ResponseData<List<MobiBean>> resp=new ResponseData<List<MobiBean>>();
+		if(list.size()<=0){
+			resp.setResultCode(Constent.FAIL_CODE);
+		}else{
+			resp.setData(list);
+			resp.setResultCode(Constent.SUCCESS_CODE);
+		}
+		return resp;
+	}
+	
+	/**获得热门推荐内容
+	 * @return
+	 */
+	public ResponseData<List<MobiBean>> getRandomContent(){
+		List<MobiBean> list=mRecommandDAO.getRandomContent();
+		ResponseData<List<MobiBean>> resp=new ResponseData<List<MobiBean>>();
+		if(list.size()<=0){
+			resp.setResultCode(Constent.FAIL_CODE);
+		}else{
+			resp.setData(list);
+			resp.setResultCode(Constent.SUCCESS_CODE);
+		}
+		return resp;
+	}
 }

@@ -27,4 +27,8 @@ public class Constent {
 	public static final int FAIL_CODE=-1;
 	
 	public static final int SUCCESS_CODE=0;
+	
+	public static final String ROW_NUM_LIMIT="10";
+	
+	public static final int  CONTENT_SUM_NUM=5000;
 }
