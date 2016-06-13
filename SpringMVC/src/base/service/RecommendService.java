@@ -41,8 +41,8 @@ public class RecommendService {
 	 */
 	public void recordDowload(String content,String user){
 		//TODO 记录下载
-		//Date currentTime=new Date(System.currentTimeMillis());
-		//mRecommandDAO.recordDowload(content, user, currentTime);
+		Date currentTime=new Date(System.currentTimeMillis());
+		mRecommandDAO.recordDowload(content, user, currentTime);
 		//generateRecommend();
 	}
 	

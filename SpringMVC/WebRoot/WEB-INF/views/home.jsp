@@ -26,13 +26,12 @@
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"
 	type="text/css">
 <link href="bootstrap/css/custom.css" rel="stylesheet" type="text/css">
-<script src="jquery/jquery.js"></script>
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="jquery/jquery.validate.js"></script>
 <script src="jquery/jquery.metadata.js"></script>
 <script src="jquery/jquery.validate.messages_cn.js"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <script>
-
 	$(document).ready(function() {
 		$("#searchForm").validate({
 			rules : {
@@ -54,32 +53,54 @@
 	/*获得推荐内容 */
    function getRecommandContent(){
 	var userName = "${userBean.getUserName()}";
-	if(userName==""){
-		   $.ajax({
-			headers : {
-				Accept : "application/json"
-			},
-			url : "/SpringMVC/getRecommendContent",
-			type : "POST",
-			dataType : "json",
-			success : function(response) {
-				if(response.resultCode==0){
-					var list=response.data;
-					for(item in list){
-						alert(list[item].description+"!!!!!!");
-					}
-				}else{
-				   
-
+	   $.ajax({
+		headers : {
+			Accept : "application/json"
+		},
+		url : "/SpringMVC/getRecommendContent",
+		type : "POST",
+		dataType : "json",
+		success : function(response) {
+			if(response.resultCode==0){
+			    var ul=$("#recommend-ul");
+				var list=response.data;
+				for(item in list){
+				     var $li_item=$("<a class='list-group-item text-center list-item' data-original-title='hi' data-trigger='hover'  rel='popover'></a>");
+				     $li_item.text(list[item].contentDest);
+				     $li_item.attr("href",list[item].url);
+				     $li_item.attr("data-content",list[item].description.substr(0,200)+"...");
+				     $li_item.attr("data-original-title",list[item].contentDest+"--"+list[item].author);
+					 if(item<4){
+						 $li_item.attr("data-placement","left");
+					 }else{
+					     $li_item.attr("data-placement","top");
+					 }
+					 ul.append($li_item);
+					 $(".list-group-item").popover({trigger: "hover"});
 				}
-			},
-			error : function(xhr, ajaxOptions, thrownError) {
-				  alert(xhr.status);
-				  alert(thrownError);
+				$(".list-group-item").bind("click",function(){
+				    var contentName=$(this).attr("data-original-title").split("--")[0];
+					recordDownload(contentName)
+				});
+			}else{
+			   
+
 			}
-		});
+		},
+		error : function(xhr, ajaxOptions, thrownError) {
+			  alert(xhr.status+thrownError);
+		}
+	});
 	}
+	//记录下载记录
+	function recordDownload(value){
+	$.post("/SpringMVC/recordDownload", {
+				content : value
+			}, function(data, status) {
+				alert("Data: " + data + "\nStatus: " + status);
+			});
 	}
+	
 </script>
 
 </head>
@@ -141,12 +162,9 @@
 				</div>
 			</div>
 			<div class="col-sm-4">
-				<div class="panel panel-primary">
-					<div class="panel-heading">
-						<h3 class="panel-title">猜你喜欢</h3>
-					</div>
-					<div class="panel-body">这是一个基本的面板</div>
-				</div>
+				<ul class="list-group" id="recommend-ul">
+				 	<li id="li_test" class="list-group-item list-group-item-success text-center list-title">猜你喜欢</li>
+				</ul>
 			</div>
 		</div>
 	</div>

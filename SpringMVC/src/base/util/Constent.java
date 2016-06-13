@@ -21,4 +21,10 @@ public class Constent {
 	public static final String GET_RECOMMEND_FAIL="get_recommend_fail";
 	
 	public static final String GET_RECOMMEND_SUCCESS="get_recommend_success";
+	
+	public static final String DEFAULT_RECOMMAND_USER="0:0:0:0:0:0:0:1";
+	
+	public static final int FAIL_CODE=-1;
+	
+	public static final int SUCCESS_CODE=0;
 }

@@ -62,17 +62,38 @@ public class RecommandController {
 	@RequestMapping(value = "/getRecommendContent", headers={"Accept=application/json"},method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseData<List<ContentSimilarBean>> getRecommendContent(@ModelAttribute UserBean userBean) {
-		System.out.println("!!!!!!!!!收到请求");
-//		String userName = userBean.getUserName();
-//		if (StringUtil.isEmpty(userName)) {
-//			return Constent.NOT_LOGIN;
-//		}
-//		return Constent.RECORD_SUCCESS;
-		List<ContentSimilarBean> list=mRecommendService.getRecommendContentByUser("aaaaaa");
+		String userName = userBean.getUserName();
+		List<ContentSimilarBean> list=getListByUserName(userName);
+		return setResponseData(list);
+	}
+
+	/**根据列表长度，设置反馈信息
+	 * @param list
+	 * @return
+	 */
+	public ResponseData<List<ContentSimilarBean>> setResponseData(List<ContentSimilarBean> list){
 		ResponseData<List<ContentSimilarBean>> data=new ResponseData<List<ContentSimilarBean>>();
-		data.setResultCode(0);
-		data.setMessage("成功");
-		data.setData(list);
+		if(list.size()<=0){
+			data.setResultCode(Constent.FAIL_CODE);	
+		}else{
+			data.setResultCode(Constent.SUCCESS_CODE);
+			data.setData(list);
+		}
 		return data;
+	}
+	
+	/**
+	 * 根据用户名获取推荐信息
+	 * @param userName
+	 * @return
+	 */
+	public List<ContentSimilarBean> getListByUserName(String userName) {
+		List<ContentSimilarBean> list;
+		if (StringUtil.isEmpty(userName)) {
+			list = mRecommendService.getRecommendContentByUser(Constent.DEFAULT_RECOMMAND_USER);
+		} else {
+			list = mRecommendService.getRecommendContentByUser(userName);
+		}
+		return list;
 	}
 }
