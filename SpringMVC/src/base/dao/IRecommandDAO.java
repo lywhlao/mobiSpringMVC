@@ -49,4 +49,8 @@ public interface IRecommandDAO {
 	 */
 	public List<MobiBean> getRandomContent();
 	
+	/**
+	 * 重置content_similar表
+	 */
+	public void resetContentSimilarDB();
 }

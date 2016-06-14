@@ -3,7 +3,6 @@ package base.configure;
 import java.util.Properties;
 
 import javax.sql.DataSource;
-import javax.validation.Validator;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -13,11 +12,15 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.mail.MailSender;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
@@ -30,11 +33,7 @@ import base.daoimpl.UserDAOImpl;
 
 //配置非web方面的bean
 @Configuration
-@ComponentScan(basePackages = { "base" }, excludeFilters = { @Filter(type = FilterType.ANNOTATION, value = EnableWebMvc.class) })
-@EnableAsync
 public class RootConfigure {
-
-	public static final int THREAD_POOL_QUEUE_NUM = 25;
 
 	// JDBC数据源
 	@Bean
@@ -89,16 +88,6 @@ public class RootConfigure {
 		return mailSenderImpl;
 	}
 
-	//线程池
-	@Bean(name = "CustomThreadPool")
-	public TaskExecutor taskExecutor() {
-		ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
-		int cpuNum = Runtime.getRuntime().availableProcessors();
-		taskExecutor.setCorePoolSize(cpuNum);
-		taskExecutor.setMaxPoolSize(2 * cpuNum);
-		taskExecutor.setQueueCapacity(THREAD_POOL_QUEUE_NUM);
-		return taskExecutor;
-	}
 	
 	//校验
 	@Bean(name="CustomValidator")

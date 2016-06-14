@@ -43,6 +43,8 @@ public class RecommandDAOimpl implements IRecommandDAO {
 	
 	private static final String GET_RANDOM_CONTENT="select * from mobi limit ? ,"+Constent.ROW_NUM_LIMIT;
 	
+	private static final String RESET_CONTENT_SIMILAR="delete from content_similar where 1=1";
+	
 	
 	public RecommandDAOimpl(JdbcTemplate jdbcTemplate) {
 		this.mJdbcTemplate = jdbcTemplate;
@@ -114,6 +116,15 @@ public class RecommandDAOimpl implements IRecommandDAO {
 			e.printStackTrace();
 		}
 		return list;
+	}
+
+	@Override
+	public void resetContentSimilarDB() {
+		try {
+			mJdbcTemplate.update(RESET_CONTENT_SIMILAR);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	

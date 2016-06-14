@@ -11,7 +11,7 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>My JSP 'register.jsp' starting page</title>
+<title>注册页面</title>
 
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
@@ -75,7 +75,7 @@
 			<div class="row">
 				<div class="col-md-9 col-md-offset-3">
 					<form class="form-horizontal" role="form" id="registerForm"
-						method="post" action="/SpringMVC/login">
+						method="post" action="/SpringMVC/register">
 						<div class="form-group">
 							<label for="userName" class="col-md-1 control-label"><span
 								class="glyphicon glyphicon-user"></span></label>

@@ -33,12 +33,11 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String submitRegister(@Valid UserBean userBean, Errors errors) {
-		if (errors.hasErrors()) {
+	public String submitRegister(@Valid UserBean userBean, Errors errors,Model model) {
+		if (errors.hasErrors()||!mUserService.createUser(userBean, model)) {
 			return Constent.ERROR_PAGE;
 		}
-		String view = mUserService.createUser(userBean);
-		return "/user/" + view;
+		return "redirect:/home";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)

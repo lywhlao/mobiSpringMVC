@@ -12,6 +12,7 @@ import java.util.Set;
 
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import base.bean.ContentSimilarBean;
@@ -54,7 +55,9 @@ public class RecommendService {
 	/**
 	 * 生成推荐
 	 */
+	@Scheduled(initialDelay=15*1000,fixedDelay=1000*10*30)
 	public void generateRecommend(){
+    	resetDataBase();
 		clearContainer();
 		setContentData();
 		fillAllUserToItem();
@@ -62,6 +65,15 @@ public class RecommendService {
 		caculateContentSimilar();
 		recordSimilar();
 	}
+	
+	
+	/**
+	 * 重置数据库
+	 */
+	public void resetDataBase(){
+		mRecommandDAO.resetContentSimilarDB();
+	}
+	
 	
 	/**
 	 * 通过用户名返回推荐内容

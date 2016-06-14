@@ -23,12 +23,13 @@ public class UserService {
 	 * @param userBean
 	 * @return
 	 */
-	public String createUser(UserBean userBean) {
+	public boolean createUser(UserBean userBean,Model model) {
 		boolean result = mUserDAO.createUser(userBean);
 		if (result) {
-			return CREATE_USER_SUCCESS_VIEW;
+			model.addAttribute("userBean", userBean);
+			return true;
 		} else {
-			return CREATE_USER_FAIL_VIEW;
+			return false;
 		}
 	}
 
